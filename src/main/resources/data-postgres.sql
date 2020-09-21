@@ -1,9 +1,9 @@
 /*  */
 INSERT INTO tech.metrics
-    (metrics_id,
-     metrics_code,
-     metrics_name,
-     metrics_codename)
+(metrics_id,
+ metrics_code,
+ metrics_name,
+ metrics_codename)
 VALUES (168, '168', 't', 'TNE'),
        (166, '166', 'kg', 'KGM'),
        (6, '006', 'm', 'MTR'),
@@ -85,5 +85,26 @@ VALUES (1, 1, 'describe'),
        (3, 2, ''),
        (1, 4, 'describe'),
        (2, 6, '');
+
+/*  */
+INSERT INTO tech.product_recipe_composed
+(product_recipe_id,
+ product_recipe_product_line,
+ product_recipe_cost_elements,
+ product_recipe_composed_shape)
+VALUES (1, 1, 2000, 0.5),
+       (1, 1, 1000, 0.5),
+       (2, 1, 2000, 1),
+       (4, 3, 2000, 0.5),
+       (4, 3, 3300, 0.45),
+       (4, 3, 0100, 0.05),
+       (1, 5, 2000, 0.5),
+       (1, 5, 3000, 0.45),
+       (1, 5, 0100, 0.025),
+       (1, 5, 0010, 0.025),
+       (3, 1, 1000, 0.99),
+       (3, 1, 0100, 0.01)
+
+
 
 

@@ -74,13 +74,36 @@ CREATE TABLE tech.product_line
 
 CREATE TABLE tech.product_recipe
 (
-    product_recipe_id           integer     NOT NULL,
-    product_recipe_product_line integer     NOT NULL,
+    product_recipe_id           integer NOT NULL,
+    product_recipe_product_line integer NOT NULL,
     product_recipe_describe     text,
     CONSTRAINT fk_product_line_id FOREIGN KEY (product_recipe_product_line)
-REFERENCES tech.product_line (product_line_id)
-MATCH SIMPLE
-ON UPDATE NO ACTION
-ON DELETE NO ACTION ,
-CONSTRAINT pkey_product_recipe PRIMARY KEY (product_recipe_product_line, product_recipe_id )
+        REFERENCES tech.product_line (product_line_id)
+            MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT pkey_product_recipe PRIMARY KEY (product_recipe_id, product_recipe_product_line)
 );
+
+CREATE TABLE tech.product_recipe_composed
+(
+    product_recipe_id             integer NOT NULL,
+    product_recipe_product_line   integer NOT NULL,
+    product_recipe_cost_elements  integer NOT NULL,
+    product_recipe_composed_shape real    NOT NULL,
+    CONSTRAINT shape_check CHECK ( product_recipe_composed_shape <= 1 AND product_recipe_composed_shape > 0 ),
+    CONSTRAINT pkey_product_recipe_composed PRIMARY KEY (
+                                                         product_recipe_id,
+                                                         product_recipe_product_line,
+                                                         product_recipe_cost_elements),
+    CONSTRAINT fk_product_recipe_id FOREIGN KEY (product_recipe_id, product_recipe_product_line)
+        REFERENCES tech.product_recipe (product_recipe_id, product_recipe_product_line)
+            MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_cost_elements_id FOREIGN KEY (product_recipe_cost_elements)
+        REFERENCES tech.cost_elements (cost_elements_id)
+            MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)

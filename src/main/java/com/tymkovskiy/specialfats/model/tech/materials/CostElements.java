@@ -1,8 +1,11 @@
 package com.tymkovskiy.specialfats.model.tech.materials;
 
 
+import com.tymkovskiy.specialfats.model.tech.products.ProductRecipeComposed;
+
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "cost_elements", schema = "tech")
@@ -23,6 +26,9 @@ public class CostElements {
     @ManyToOne
     @JoinColumn(name = "cost_elements_category", nullable = false, referencedColumnName = "cost_elements_category_id")
     private CostElementsCategory costElementsCategory;
+
+    @OneToMany(targetEntity = CostElements.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<ProductRecipeComposed> productRecipeComposedSet;
 
     public CostElements() {
     }
@@ -67,21 +73,30 @@ public class CostElements {
         this.costElementsCategory = costElementsCategory;
     }
 
+    public Set<ProductRecipeComposed> getProductRecipeComposedSet() {
+        return productRecipeComposedSet;
+    }
+
+    public void setProductRecipeComposedSet(Set<ProductRecipeComposed> productRecipeComposedSet) {
+        this.productRecipeComposedSet = productRecipeComposedSet;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof CostElements)) return false;
         CostElements that = (CostElements) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(code, that.code) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(metrics, that.metrics) &&
-                Objects.equals(costElementsCategory, that.costElementsCategory);
+        return Objects.equals(getId(), that.getId()) &&
+                Objects.equals(getCode(), that.getCode()) &&
+                Objects.equals(getName(), that.getName()) &&
+                Objects.equals(getMetrics(), that.getMetrics()) &&
+                Objects.equals(getCostElementsCategory(), that.getCostElementsCategory()) &&
+                Objects.equals(getProductRecipeComposedSet(), that.getProductRecipeComposedSet());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, code, name, metrics, costElementsCategory);
+        return Objects.hash(getId(), getCode(), getName(), getMetrics(), getCostElementsCategory(), getProductRecipeComposedSet());
     }
 
     @Override
@@ -92,6 +107,7 @@ public class CostElements {
                 ", name='" + name + '\'' +
                 ", metrics=" + metrics +
                 ", costElementsCategory=" + costElementsCategory +
+                ", productRecipeComposedSet=" + productRecipeComposedSet +
                 '}';
     }
 }
