@@ -87,23 +87,36 @@ VALUES (1, 1, 'describe'),
        (2, 6, '');
 
 /*  */
+INSERT INTO tech.material_quality_level
+(quality_level_id,
+ quality_level_code,
+ quality_level_rank)
+VALUES (1, 'I cat.', 1),
+       (2, 'II cat.', 2),
+       (3, 'III cat.', 3),
+       (4, 'IV cat.', 4),
+       (5, 'V cat.', 5),
+       (6, 'VI cat.', 6);
+
+/*  */
 INSERT INTO tech.product_recipe_composed
 (product_recipe_id,
  product_recipe_product_line,
  product_recipe_cost_elements,
- product_recipe_composed_shape)
-VALUES (1, 1, 2000, 0.5),
-       (1, 1, 1000, 0.5),
-       (2, 1, 2000, 1),
-       (4, 3, 2000, 0.5),
-       (4, 3, 3300, 0.45),
-       (4, 3, 0100, 0.05),
-       (1, 5, 2000, 0.5),
-       (1, 5, 3000, 0.45),
-       (1, 5, 0100, 0.025),
-       (1, 5, 0010, 0.025),
-       (3, 1, 1000, 0.99),
-       (3, 1, 0100, 0.01)
+ product_recipe_composed_shape,
+ product_recipe_cost_elements_quality_level)
+VALUES (1, 1, 2000, 0.5, 2),
+       (1, 1, 1000, 0.5, 1),
+       (2, 1, 2000, 1, 2),
+       (4, 3, 2000, 0.5, 3),
+       (4, 3, 3300, 0.45, 1),
+       (4, 3, 0100, 0.05, null),
+       (1, 5, 2000, 0.5, 5),
+       (1, 5, 3000, 0.45, 1),
+       (1, 5, 0100, 0.025, null),
+       (1, 5, 0010, 0.025, null),
+       (3, 1, 1000, 0.99, 3),
+       (3, 1, 0100, 0.01, null);
 
 
 

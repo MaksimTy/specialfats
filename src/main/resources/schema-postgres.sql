@@ -85,12 +85,22 @@ CREATE TABLE tech.product_recipe
     CONSTRAINT pkey_product_recipe PRIMARY KEY (product_recipe_id, product_recipe_product_line)
 );
 
+CREATE TABLE tech.material_quality_level
+(
+    quality_level_id   integer PRIMARY KEY,
+    quality_level_code VARCHAR(10)
+        CONSTRAINT uq_quality_level_code UNIQUE NOT NULL,
+    quality_level_rank SMALLINT
+        CONSTRAINT uq_quality_level_rank UNIQUE NOT NULL
+);
+
 CREATE TABLE tech.product_recipe_composed
 (
-    product_recipe_id             integer NOT NULL,
-    product_recipe_product_line   integer NOT NULL,
-    product_recipe_cost_elements  integer NOT NULL,
-    product_recipe_composed_shape real    NOT NULL,
+    product_recipe_id                          integer NOT NULL,
+    product_recipe_product_line                integer NOT NULL,
+    product_recipe_cost_elements               integer NOT NULL,
+    product_recipe_cost_elements_quality_level integer,
+    product_recipe_composed_shape              real    NOT NULL,
     CONSTRAINT shape_check CHECK ( product_recipe_composed_shape <= 1 AND product_recipe_composed_shape > 0 ),
     CONSTRAINT pkey_product_recipe_composed PRIMARY KEY (
                                                          product_recipe_id,
@@ -103,6 +113,11 @@ CREATE TABLE tech.product_recipe_composed
         ON DELETE NO ACTION,
     CONSTRAINT fk_cost_elements_id FOREIGN KEY (product_recipe_cost_elements)
         REFERENCES tech.cost_elements (cost_elements_id)
+            MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_quality_level_id FOREIGN KEY (product_recipe_cost_elements_quality_level)
+        REFERENCES tech.material_quality_level (quality_level_id)
             MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

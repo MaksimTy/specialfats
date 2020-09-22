@@ -15,6 +15,7 @@
         <th>name</th>
         <th>code</th>
         <th>material</th>
+        <th>quality</th>
         <th>share</th>
         <th>action</th>
     </tr>
@@ -26,6 +27,7 @@
             <td>${item.productRecipe.productLine.name}</td>
             <td>${item.compositeKeyRecipeComposed.id}</td>
             <td>${item.costElements.name}</td>
+            <td><#if item.materialQualityLevel ?? >${item.materialQualityLevel.code} <#else> </#if></td>
             <td>${item.share}</td>
             <td><a href="<@spring.url'/productRecipeComposedEdit/${item.compositeKeyRecipeComposed}'/>">edit</a></td>
         </tr>
